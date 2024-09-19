@@ -8,7 +8,6 @@ RUN chmod +x /action/entrypoint.sh
 
 RUN apk update && \
     apk upgrade && \
-    apk add git && \
-    apk add composer
+    apk add git composer php8-simplexml php8-tokenizer
 
 ENTRYPOINT ["/action/entrypoint.sh"]
