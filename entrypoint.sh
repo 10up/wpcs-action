@@ -10,6 +10,7 @@ if ! [ -x "$(command -v composer)" ]; then
 fi
 
 composer global config allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
+composer global require --dev phpcsstandards/phpcsextra:"^1.2.0"
 composer global require --dev wp-coding-standards/wpcs:"^3.0.0" --update-with-dependencies
 
 git config --global --add safe.directory $(pwd)
@@ -124,7 +125,7 @@ elif [ "${INPUT_STANDARD}" = "10up-Default" ]; then
     git clone https://github.com/Automattic/VIP-Coding-Standards ${HOME}/vipcs
     git clone https://github.com/sirbrillig/phpcs-variable-analysis ${HOME}/variable-analysis
 
-    decide_all_files_or_changed "$(composer config home)/vendor/wp-coding-standards/wpcs,${HOME}/10up/10up-Default,${HOME}/phpcompatwp/PHPCompatibilityWP,${HOME}/phpcompat/PHPCompatibility,${HOME}/phpcompat-paragonie/PHPCompatibilityParagonieSodiumCompat,${HOME}/phpcompat-paragonie/PHPCompatibilityParagonieRandomCompat,${HOME}/phpcsutils/PHPCSUtils,${HOME}/vipcs,${HOME}/variable-analysis"
+    decide_all_files_or_changed "$(composer config home)/vendor/wp-coding-standards/wpcs,${HOME}/10up/10up-Default,${HOME}/phpcompatwp/PHPCompatibilityWP,${HOME}/phpcompat/PHPCompatibility,${HOME}/phpcompat-paragonie/PHPCompatibilityParagonieSodiumCompat,${HOME}/phpcompat-paragonie/PHPCompatibilityParagonieRandomCompat,${HOME}/phpcsutils/PHPCSUtils,$(composer config home)/vendor/phpcsstandards/phpcsextra,${HOME}/vipcs,${HOME}/variable-analysis"
 elif [ -z "${INPUT_STANDARD_REPO}" ] || [ "${INPUT_STANDARD_REPO}" = "false" ]; then
   echo "Setting up default WPCS"
   git clone --depth 1 --branch 1.0.11 https://github.com/PHPCSStandards/PHPCSUtils ${HOME}/phpcsutils
