@@ -126,7 +126,9 @@ elif [ "${INPUT_STANDARD}" = "10up-Default" ]; then
 
     decide_all_files_or_changed "${HOME}/10up/10up-Default,${HOME}/phpcompatwp/PHPCompatibilityWP,${HOME}/phpcompat/PHPCompatibility,${HOME}/phpcompat-paragonie/PHPCompatibilityParagonieSodiumCompat,${HOME}/phpcompat-paragonie/PHPCompatibilityParagonieRandomCompat,${HOME}/phpcsutils/PHPCSUtils,${HOME}/vipcs,${HOME}/variable-analysis"
 elif [ -z "${INPUT_STANDARD_REPO}" ] || [ "${INPUT_STANDARD_REPO}" = "false" ]; then
-  decide_all_files_or_changed "$(composer config home)/vendor/wp-coding-standards/wpcs"
+  echo "Setting up default WPCS"
+  git clone --depth 1 --branch 1.0.11 https://github.com/PHPCSStandards/PHPCSUtils ${HOME}/phpcsutils
+  decide_all_files_or_changed "$(composer config home)/vendor/wp-coding-standards/wpcs,${HOME}/phpcsutils/PHPCSUtils"
 else
   echo "Standard repository: ${INPUT_STANDARD_REPO}"
   git clone -b ${INPUT_REPO_BRANCH} ${INPUT_STANDARD_REPO} ${HOME}/cs
