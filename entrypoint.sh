@@ -2,9 +2,11 @@
 
 cp /action/problem-matcher.json /github/workflow/problem-matcher.json
 
-git clone --depth 1 -b 2.3.0 https://github.com/WordPress/WordPress-Coding-Standards.git ~/wpcs
-
 git config --global --add safe.directory $(pwd)
+
+composer global config allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
+composer global require --dev wp-coding-standards/wpcs:"^3.1.0" --update-with-dependencies
+composer global require --dev 10up/phpcs-composer:"^3.0"
 
 diff_lines() {
   path=""
@@ -100,30 +102,29 @@ else
     echo "Will check all files"
 fi
 
+COMPOSER_HOME="$(composer config home)/vendor"
+WPCS_PATH="$(composer config home)/vendor/wp-coding-standards/wpcs,$(composer config home)/vendor/phpcsstandards/phpcsutils,$(composer config home)/vendor/phpcsstandards/phpcsextra"
 if [ "${INPUT_STANDARD}" = "WordPress-VIP-Go" ] || [ "${INPUT_STANDARD}" = "WordPressVIPMinimum" ]; then
     echo "Setting up VIPCS"
-    git clone --depth 1 -b 2.3.3 https://github.com/Automattic/VIP-Coding-Standards.git ${HOME}/vipcs
-    git clone https://github.com/sirbrillig/phpcs-variable-analysis ${HOME}/variable-analysis
 
-    decide_all_files_or_changed "${HOME}/wpcs,${HOME}/vipcs,${HOME}/variable-analysis"
+    decide_all_files_or_changed "${WPCS_PATH},${COMPOSER_HOME}/automattic/vipwpcs,${COMPOSER_HOME}/sirbrillig/phpcs-variable-analysis"
 elif [ "${INPUT_STANDARD}" = "10up-Default" ]; then
     echo "Setting up 10up-Default"
-    git clone https://github.com/10up/phpcs-composer ${HOME}/10up
-    git clone https://github.com/PHPCompatibility/PHPCompatibilityWP ${HOME}/phpcompatwp
-    git clone https://github.com/PHPCompatibility/PHPCompatibility ${HOME}/phpcompat
-    git clone https://github.com/PHPCompatibility/PHPCompatibilityParagonie ${HOME}/phpcompat-paragonie
-    git clone --depth 1 --branch 1.0.11 https://github.com/PHPCSStandards/PHPCSUtils ${HOME}/phpcsutils
-    git clone https://github.com/Automattic/VIP-Coding-Standards ${HOME}/vipcs
-    git clone https://github.com/sirbrillig/phpcs-variable-analysis ${HOME}/variable-analysis
 
-    decide_all_files_or_changed "${HOME}/wpcs,${HOME}/10up/10up-Default,${HOME}/phpcompatwp/PHPCompatibilityWP,${HOME}/phpcompat/PHPCompatibility,${HOME}/phpcompat-paragonie/PHPCompatibilityParagonieSodiumCompat,${HOME}/phpcompat-paragonie/PHPCompatibilityParagonieRandomCompat,${HOME}/phpcsutils/PHPCSUtils,${HOME}/vipcs,${HOME}/variable-analysis"
+    decide_all_files_or_changed "${WPCS_PATH},${COMPOSER_HOME}/10up/phpcs-composer,${COMPOSER_HOME}/phpcompatibility/phpcompatibility-wp,${COMPOSER_HOME}/phpcompatibility/php-compatibility,${COMPOSER_HOME}/phpcompatibility/phpcompatibility-paragonie,${COMPOSER_HOME}/automattic/vipwpcs,${COMPOSER_HOME}/sirbrillig/phpcs-variable-analysis"
+
+    # Add the phpcs -i command to list installed standards
+    echo "Installed coding standards:"
+    phpcs -i
 elif [ -z "${INPUT_STANDARD_REPO}" ] || [ "${INPUT_STANDARD_REPO}" = "false" ]; then
-  decide_all_files_or_changed "${HOME}/wpcs"
+  echo "Setting up default WPCS"
+
+  decide_all_files_or_changed "${WPCS_PATH}"
 else
   echo "Standard repository: ${INPUT_STANDARD_REPO}"
   git clone -b ${INPUT_REPO_BRANCH} ${INPUT_STANDARD_REPO} ${HOME}/cs
 
-  decide_all_files_or_changed "${HOME}/wpcs,${HOME}/cs"
+  decide_all_files_or_changed "${WPCS_PATH},${HOME}/cs"
 fi
 
 if [ -z "${INPUT_EXCLUDES}" ]; then
