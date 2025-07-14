@@ -1,14 +1,14 @@
 # WPCS GitHub Action
 
->  GitHub Action to help you lint your PHP without additional dependencies within your codebase.
+> GitHub Action to help you lint your PHP without additional dependencies within your codebase.
 
 [![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![Release Version](https://img.shields.io/github/release/10up/wpcs-action.svg)](https://github.com/10up/wpcs-action/releases/latest) [![MIT License](https://img.shields.io/github/license/10up/wpcs-action.svg)](https://github.com/10up/wpcs-action/blob/develop/LICENSE)
 
 ## Overview
 
-This action will help you to run phpcs (PHP_CodeSniffer) against [WordPress Coding Standards](https://github.com/WordPress/WordPress-Coding-Standards) with [GitHub Actions](https://github.com/features/actions) platform.
+This action will help you to run phpcs (PHP_CodeSniffer) against [WordPress Coding Standards](https://github.com/WordPress/WordPress-Coding-Standards) with the [GitHub Actions](https://github.com/features/actions) platform.
 
-To make it as simple as possible, this action supports WordPress Coding Standards exclusively and only checks for PHP files. This action doesn't require any change or addition to your source code. It means that you don't need to add composer/phpcs to your plugin or create PHP CodeSniffer config to use this action.
+To make it as simple as possible, this action supports WordPress Coding Standards exclusively and only checks for PHP files. This action doesn't require any change or addition to your source code. It means that you don't need to add composer/phpcs to your plugin or create a PHP CodeSniffer config to use this action.
 
 This is a fork of [chekalsky/phpcs-action](https://github.com/chekalsky/phpcs-action), so this action supports GitHub Action annotations too. All credit goes to
 [Ilya Chekalsky](https://github.com/chekalsky).
@@ -37,7 +37,7 @@ jobs:
       name: WPCS
       runs-on: ubuntu-latest
       steps:
-        - uses: actions/checkout@v3
+        - uses: actions/checkout@v4
         - name: WPCS check
           uses: 10up/wpcs-action@stable
 ```
@@ -76,7 +76,7 @@ jobs:
       name: VIPCS
       runs-on: ubuntu-latest
       steps:
-        - uses: actions/checkout@v3
+        - uses: actions/checkout@v4
         - name: VIPCS check
           uses: 10up/wpcs-action@stable
           with:
@@ -95,7 +95,7 @@ jobs:
       name: VIPCS
       runs-on: ubuntu-latest
       steps:
-        - uses: actions/checkout@v3
+        - uses: actions/checkout@v4
         - name: VIPCS check
           uses: 10up/wpcs-action@stable
           with:
@@ -116,11 +116,11 @@ Create a custom project ruleset by creating file named `phpcs.xml.dist` in the r
 ```xml
 <?xml version="1.0"?>
 <ruleset name="Project Rules">
-	<rule ref="WordPress">
-	<!-- Any of `WordPress|WordPress-Core|WordPress-Docs|WordPress-Extra|WordPress-VIP-Go|WordPressVIPMinimum|10up-Default` -->
-		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
-		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
-	</rule>
+  <rule ref="WordPress">
+    <!-- Any of `WordPress|WordPress-Core|WordPress-Docs|WordPress-Extra|WordPress-VIP-Go|WordPressVIPMinimum|10up-Default` -->
+    <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
+    <exclude name="WordPress.Files.FileName.InvalidClassFileName" />
+  </rule>
 </ruleset>
 ```
 
@@ -132,13 +132,14 @@ jobs:
     name: WPCS
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: WPCS check
         uses: 10up/wpcs-action@stable
         with:
           standard: 'WordPress' # Standard to use. Accepts WordPress|WordPress-Core|WordPress-Docs|WordPress-Extra|WordPress-VIP-Go|WordPressVIPMinimum|10up-Default.
           use_local_config: 'true'
 ```
+
 ### Run linter on changed lines
 
 ```yaml
@@ -151,9 +152,9 @@ jobs:
     name: WPCS
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # This is very important. Without this the linting of only the changed lines will not work. 
+          fetch-depth: 0 # This is very important. Without this the linting of only the changed lines will not work.
       - name: WPCS check
         uses: 10up/wpcs-action@stable
         with:
@@ -176,4 +177,4 @@ Please read [CODE_OF_CONDUCT.md](https://github.com/10up/wpcs-action/blob/develo
 
 ## Like what you see?
 
-<a href="http://10up.com/contact/"><img src="https://github.com/10up/.github/blob/trunk/profile/10up-github-banner.jpg" width="850" alt="Work with the 10up WordPress Practice at Fueled"></a>
+[![Work with the 10up WordPress Practice at Fueled](https://github.com/10up/.github/blob/trunk/profile/10up-github-banner.jpg)](http://10up.com/contact/)
