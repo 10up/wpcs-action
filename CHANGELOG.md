@@ -5,6 +5,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.0] - 2025-10-01
+
+### Fixed
+
+- Use version 3.x of PHP CodeSniffer to avoid a fatal error (props [@paulschreiber](https://github.com/paulschreiber), [@GaryJones](https://github.com/GaryJones), [@iamdharmesh](https://github.com/iamdharmesh) via [#53](https://github.com/10up/wpcs-action/pull/53)).
+
 ## [2.0.0] - 2025-07-15
 
 ### Changed
@@ -117,6 +123,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `phpcs_bin_path` and `installed_paths` options.
 
 [Unreleased]: https://github.com/10up/wpcs-action/compare/stable...develop
+[2.1.0]: https://github.com/10up/wpcs-action/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/10up/wpcs-action/compare/v1.7.0...v2.0.0
 [1.7.0]: https://github.com/10up/wpcs-action/compare/v1.6.1...v1.7.0
 [1.6.1]: https://github.com/10up/wpcs-action/compare/v1.6.0...v1.6.1

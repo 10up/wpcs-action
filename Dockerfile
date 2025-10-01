@@ -12,7 +12,7 @@ RUN set -eux \
 		php8-xmlreader \
 		php8-xmlwriter \
 		php-xml \
-	&& git clone https://github.com/PHPCSStandards/PHP_CodeSniffer
+	&& git clone -b 3.x https://github.com/PHPCSStandards/PHP_CodeSniffer
 
 # Install PHP CodeSniffer
 RUN set -eux \
